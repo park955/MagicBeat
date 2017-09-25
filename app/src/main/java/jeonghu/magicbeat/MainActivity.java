@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-
-    Button buttonb1,buttonb2,buttonb3,buttonp1,buttonp2;
+    Button buttonb1, buttonb2, buttonb3, buttonp1, buttonp2;
     MediaPlayer beat01,beat02,beat03,piano01,piano02;
 
     @Override
@@ -21,6 +20,13 @@ public class MainActivity extends AppCompatActivity {
         buttonb3 = (Button) findViewById(R.id.buttonb3);
         buttonp1 = (Button) findViewById(R.id.buttonp1);
         buttonp2 = (Button) findViewById(R.id.buttonp2);
+
+        findViewById(R.id.buttonReset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pressedReset(view);
+            }
+        });
 
         beat01 = MediaPlayer.create(MainActivity.this,R.raw.beat01_bpm160);
         beat02 = MediaPlayer.create(MainActivity.this,R.raw.beat02_bpm160);
