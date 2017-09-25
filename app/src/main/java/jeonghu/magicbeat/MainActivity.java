@@ -104,6 +104,6 @@ public class MainActivity extends AppCompatActivity {
         piano01.reset();
         piano02.reset();
 
-        beat01.
+        
     }
 }
