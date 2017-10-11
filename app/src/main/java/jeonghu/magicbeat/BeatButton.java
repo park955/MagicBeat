@@ -1,33 +1,57 @@
 package jeonghu.magicbeat;
 
-import android.content.Context;
 import android.media.MediaPlayer;
-import android.support.v7.widget.AppCompatButton;
-import android.view.View;
+import android.widget.Button;
+import android.widget.ToggleButton;
 
 /**
  * Created by Chukwudi on 9/25/2017.
  */
 
-public class BeatButton extends AppCompatButton implements View.OnClickListener {
-    MediaPlayer beat;
-    boolean isInitialized = false;
-    int milliSeconds = 0;
+class BeatButton
+{
+    private MediaPlayer beat;
+    private boolean isInitialized = false;
+    public int milliSeconds = 0;
+    private Button button;
+    private ToggleButton Tbutton;
 
-    public BeatButton(Context context) {
-        super(context);
+
+    BeatButton(MediaPlayer beat, Button button){
+        this.beat = beat;
+        this.beat.setLooping(false);
+        this.button = button;
     }
 
-    void initialize(MediaPlayer beat) {
-        if (isInitialized) return;
-
-        isInitialized = true;
+    BeatButton(MediaPlayer beat, ToggleButton tbutton){
         this.beat = beat;
+        this.beat.setLooping(false);
+        this.Tbutton = tbutton;
+    }
+
+    MediaPlayer getBeat(){
+        return this.beat;
+    }
+    ToggleButton getTbutton(){
+        return this.Tbutton;
     }
 
     void pause() {
-        milliSeconds = beat.getCurrentPosition();
-        beat.pause();
+        if(beat.isPlaying()) {
+            milliSeconds = beat.getCurrentPosition();
+            beat.pause();
+        }
+    }
+
+    void pauseOrPlay(){
+        if(beat.isPlaying()) {
+            milliSeconds = beat.getCurrentPosition();
+            beat.pause();
+        }
+        else{
+            beat.seekTo(milliSeconds);
+            beat.start();
+        }
     }
 
     void reset() {
@@ -40,9 +64,5 @@ public class BeatButton extends AppCompatButton implements View.OnClickListener 
         beat.start();
     }
 
-    @Override
-    public void onClick(View view) {
-        if (beat.isPlaying()) pause();
-        else resume();
-    }
+
 }

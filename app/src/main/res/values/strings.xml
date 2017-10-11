@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MagicBeat</string>
+    <string name="beat_3">Beat 3</string>
+    <string name="beat_2">Beat 2</string>
+    <string name="beat_1">Beat 1</string>
+    <string name="piano_1">Piano 1</string>
+    <string name="piano_2">Piano 2</string>
+    <string name="reset">Reset</string>
+    <string name="button">Button</string>
 </resources>
