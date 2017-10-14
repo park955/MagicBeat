@@ -1,41 +1,33 @@
 package jeonghu.magicbeat;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.ToggleButton;
-
-import static jeonghu.magicbeat.R.id.TbuttonM1;
-import static jeonghu.magicbeat.R.id.TbuttonM3;
-import static jeonghu.magicbeat.R.id.buttonb1;
-import static jeonghu.magicbeat.R.id.buttonb2;
-import static jeonghu.magicbeat.R.id.buttonb3;
-import static jeonghu.magicbeat.R.id.buttonp1;
-import static jeonghu.magicbeat.R.id.buttonp2;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
     BeatButton b1, b2, b3, p1, p2;
     TextView test;
     ProgressBar bar;
+    */
 
-    BeatButton[] mybeats = new BeatButton[10];
+    BeatButton[] mybeats = new BeatButton[12];
 
     @Override
     public void onPause(){
         super.onPause();
-
+        /*
         b1.pause();
         b2.pause();
         b3.pause();
         p1.pause();
         p2.pause();
+        */
     }
 
     @Override
@@ -43,6 +35,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mybeats[0] = new BeatButton((Button)findViewById(R.id.button0));
+        mybeats[1] = new BeatButton((Button)findViewById(R.id.button1));
+        mybeats[2] = new BeatButton((Button)findViewById(R.id.button2));
+        mybeats[3] = new BeatButton((Button)findViewById(R.id.button3));
+        mybeats[4] = new BeatButton((Button)findViewById(R.id.button4));
+        mybeats[5] = new BeatButton((Button)findViewById(R.id.button5));
+        mybeats[6] = new BeatButton((Button)findViewById(R.id.button6));
+        mybeats[7] = new BeatButton((Button)findViewById(R.id.button7));
+        mybeats[8] = new BeatButton((Button)findViewById(R.id.button8));
+        mybeats[9] = new BeatButton((Button)findViewById(R.id.button9));
+        mybeats[10] = new BeatButton((Button)findViewById(R.id.button10));
+        mybeats[11] = new BeatButton((Button)findViewById(R.id.button11));
+
+        FloatingActionButton makeLoop = (FloatingActionButton) findViewById(R.id.makeLoop);
+        makeLoop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent goMakeLoop;
+                goMakeLoop = new Intent(this, make.class);
+                startActivity(goMakeLoop);
+
+            }
+        });
+/*
         b1 = new BeatButton(MediaPlayer.create(MainActivity.this,R.raw.beat01_bpm160),(Button)findViewById(buttonb1));
         b2 = new BeatButton(MediaPlayer.create(MainActivity.this,R.raw.beat02_bpm160),(Button)findViewById(buttonb2));
         b3 = new BeatButton(MediaPlayer.create(MainActivity.this,R.raw.beat03_bpm160),(Button)findViewById(buttonb3));
@@ -82,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 /*
         findViewById(buttonb1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.pauseOrPlay();
             }
         });
-        */
+
         findViewById(TbuttonM1).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -129,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Handler handler = new Handler();
-        final int delay = 8000; //milliseconds
+        final int delay = 7900; //milliseconds
         //ProgressBar's maximum is also set to 8000
 
         handler.postDelayed(new Runnable(){
@@ -140,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mybeats[2].getTbutton().isChecked()) mybeats[2].resume();
             }
         }, delay);
+        */
 
     }
 }

@@ -1,8 +1,6 @@
 package jeonghu.magicbeat;
 
-import android.media.MediaPlayer;
 import android.widget.Button;
-import android.widget.ToggleButton;
 
 /**
  * Created by Chukwudi on 9/25/2017.
@@ -10,6 +8,16 @@ import android.widget.ToggleButton;
 
 class BeatButton
 {
+    private Button button;
+    private String name;
+
+    BeatButton(Button x){
+        this.button = x;
+        name = null;
+    }
+
+
+    /*
     private MediaPlayer beat;
     private boolean isInitialized = false;
     public int milliSeconds = 0;
@@ -63,6 +71,7 @@ class BeatButton
         beat.seekTo(milliSeconds);
         beat.start();
     }
+    */
 
 
 }
