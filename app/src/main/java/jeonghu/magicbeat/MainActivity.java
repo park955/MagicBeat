@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent goMakeLoop;
-                goMakeLoop = new Intent(this, make.class);
+                goMakeLoop = new Intent(MainActivity.this, make.class);
                 startActivity(goMakeLoop);
 
             }
