@@ -7,4 +7,6 @@
     <string name="piano_2">Piano 2</string>
     <string name="reset">Reset</string>
     <string name="button">Button</string>
+
+    <string name="make_activity_loop_name_filler_text">Custom Loop</string>
 </resources>

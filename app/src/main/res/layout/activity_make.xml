@@ -1,17 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jeonghu.magicbeat.make">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    tools:context="jeonghu.magicbeat.MakeActivity"
+    tools:ignore="NestedWeights,ContentDescription">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="181dp"/>
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/loop_name_bar"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <ImageButton
+            android:background="@drawable/ic_menu_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+
+        <EditText
+            android:id="@+id/loop_name"
+            android:inputType="text"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:hint="@string/make_activity_loop_name_filler_text" />
+
+        <ImageButton
+            android:background="@drawable/ic_save_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/note_picker_view"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:layout_width="match_parent"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/loop_buttons"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <ImageButton
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+        <ImageButton
+            android:background="@drawable/ic_skip_previous_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+        <ImageButton
+            android:background="@drawable/ic_play_arrow_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+        <ImageButton
+            android:background="@drawable/ic_add_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+        <ImageButton
+            android:background="@drawable/ic_clear_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+        <ImageButton
+            android:background="@drawable/ic_arrow_forward_black_24dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp" />
+    </LinearLayout>
+</LinearLayout>
