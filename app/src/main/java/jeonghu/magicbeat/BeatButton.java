@@ -10,68 +10,31 @@ class BeatButton
 {
     private Button button;
     private String name;
+    private int id;
+    int[][] notes;
 
     BeatButton(Button x){
         this.button = x;
-        name = null;
+        name = "Empty";
     }
 
-
-    /*
-    private MediaPlayer beat;
-    private boolean isInitialized = false;
-    public int milliSeconds = 0;
-    private Button button;
-    private ToggleButton Tbutton;
-
-
-    BeatButton(MediaPlayer beat, Button button){
-        this.beat = beat;
-        this.beat.setLooping(false);
-        this.button = button;
+    Button getButton(){
+        return button;
     }
-
-    BeatButton(MediaPlayer beat, ToggleButton tbutton){
-        this.beat = beat;
-        this.beat.setLooping(false);
-        this.Tbutton = tbutton;
+    int getId(){
+        return id;
     }
-
-    MediaPlayer getBeat(){
-        return this.beat;
+    void setId(int x){
+        this.id = x;
     }
-    ToggleButton getTbutton(){
-        return this.Tbutton;
+    void setName(String name){
+        this.name = name;
     }
-
-    void pause() {
-        if(beat.isPlaying()) {
-            milliSeconds = beat.getCurrentPosition();
-            beat.pause();
-        }
+    String getName(){
+        return name;
     }
-
-    void pauseOrPlay(){
-        if(beat.isPlaying()) {
-            milliSeconds = beat.getCurrentPosition();
-            beat.pause();
-        }
-        else{
-            beat.seekTo(milliSeconds);
-            beat.start();
-        }
+    void emptyNotes(){
+        notes = null;
     }
-
-    void reset() {
-        milliSeconds = 0;
-        beat.seekTo(milliSeconds);
-    }
-
-    void resume() {
-        beat.seekTo(milliSeconds);
-        beat.start();
-    }
-    */
-
 
 }

@@ -3,37 +3,30 @@ package jeonghu.magicbeat;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
-import android.view.View;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Jeonghu on 10/25/17.
  */
 
-public class NoteButton extends AppCompatButton {
+public class NoteButton extends AppCompatButton{
 
     private String note;
     private int position = 0;
-    private boolean isChecked = false;
+    private NoteState noteState = NoteState.OFF;
     private boolean color = true;
+    private int noteInt = 0;
+    //MidiDriver midi;
 
     NoteButton(Context context){
         super(context);
     }
 
-    NoteButton(final Context context, String note, int position, boolean color){
+    NoteButton(final Context context, String note, int position, boolean color, int noteInt){
         this(context);
         this.note = note;
         this.position = position;
         this.color = color;
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                click(view);
-            }
-        });
+        this.noteInt = noteInt;
     }
 
     public void setNote(String note){
@@ -53,15 +46,33 @@ public class NoteButton extends AppCompatButton {
     }
 
     public boolean isChecked(){
-        return isChecked;
+        if(noteState == NoteState.HIGH || noteState == NoteState.LOW)
+        return true;
+
+        return false;
     }
 
-    public void click(View v){
-        isChecked = !isChecked;
-        if(isChecked) {
-            Log.i(TAG, "onClick: thiis gets here");
+    public NoteState getNoteState(){
+        return noteState;
+    }
+
+    public int getNoteInt(){
+        return noteInt;
+    }
+
+    public NoteState click(){
+        if(noteState == NoteState.HIGH) noteState = NoteState.HIGH;
+        else if(noteState == NoteState.LOW) noteState = NoteState.OFF;
+        else noteState = NoteState.LOW;
+
+
+        if(noteState == NoteState.LOW) {
             this.setBackgroundColor(Color.GREEN);
-        } else {
+        }
+        else if(noteState == NoteState.HIGH){
+            this.setBackgroundColor(Color.BLUE);
+        }
+        else {
             if(color){
                 this.setBackgroundColor(Color.DKGRAY);
                 this.setTextColor(Color.WHITE);
@@ -71,7 +82,28 @@ public class NoteButton extends AppCompatButton {
             }
         }
 
+        return noteState;
+    }
 
+    public NoteState longclick(){
+        if(noteState == NoteState.HIGH) noteState = NoteState.OFF;
+        else if(noteState == NoteState.LOW) noteState = NoteState.HIGH;
+        else noteState = NoteState.HIGH;
+
+        if(noteState == NoteState.HIGH){
+            this.setBackgroundColor(Color.BLUE);
+        }
+        else {
+            if(color){
+                this.setBackgroundColor(Color.DKGRAY);
+                this.setTextColor(Color.WHITE);
+            } else{
+                this.setBackgroundColor(Color.WHITE);
+                this.setTextColor(Color.BLACK);
+            }
+        }
+
+        return noteState;
     }
 
 }
