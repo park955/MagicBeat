@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:layout_width="0dp"
-            android:hint="@string/make_activity_loop_name_filler_text" />
+            android:hint="Custom" />
 
         <ImageButton
             android:id="@+id/saveButton"
@@ -54,45 +54,48 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/leftArrow"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/ic_arrow_back_black_24dp"/>
-
-        <ImageButton
-            android:id="@+id/toStartButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/ic_skip_previous_black_24dp"/>
-
-        <ImageButton
             android:id="@+id/playButton"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@drawable/ic_play_arrow_black_24dp"/>
 
         <ImageButton
-            android:id="@+id/addButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/ic_add_black_24dp"/>
-
-        <ImageButton
             android:id="@+id/deleteButton"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@drawable/ic_clear_black_24dp"/>
 
         <ImageButton
-            android:id="@+id/rightArrow"
-            android:layout_width="0dp"
+            android:id="@+id/leftButton"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:background="@drawable/ic_arrow_back_black_24dp"/>
+
+        <ImageButton
+            android:id="@+id/rightButton"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:background="@drawable/ic_arrow_forward_black_24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:text="BPM:"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/showbpm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 </LinearLayout>

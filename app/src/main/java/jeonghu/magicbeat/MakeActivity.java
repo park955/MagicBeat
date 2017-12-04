@@ -1,11 +1,12 @@
 package jeonghu.magicbeat;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +18,8 @@ import org.billthefarmer.mididriver.MidiDriver;
 
 import java.util.ArrayList;
 
+import static jeonghu.magicbeat.MainActivity.mybeats;
+
 /**
  * Created by Jeonghu on 10/19/17.
  */
@@ -25,7 +28,12 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
     int maxPosition = 8;
     int currentPosition = 8;
     ArrayList<LinearLayout> rows = new ArrayList<>();
-    //ArrayList<Screen> screens = new ArrayList<>();
+
+    public static final int NUM_COLUMNS = 8;
+    public static final int NUM_ROWS = 13;
+
+    int bpm;
+
     MidiDriver midi;
     private int passedItemIndex;
 
@@ -49,66 +57,38 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
 
         setUpScreen();
 
-        //Right Arrow Button
-        ((ImageButton) findViewById(R.id.rightArrow)).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(maxPosition == currentPosition)
-                    Toast.makeText(getApplicationContext(), "Can't go to further right", Toast.LENGTH_SHORT).show();
-                else{
-                    //SHIFT THE VIEW HERE
-                }
-            }
-        });
-
-        //Left Arrow Button
-        ((ImageButton) findViewById(R.id.leftArrow)).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(maxPosition-8 == 0)
-                    Toast.makeText(getApplicationContext(), "Can't go to further Left", Toast.LENGTH_SHORT).show();
-                else{
-                    //SHIFT THE VIEW HERE
-                }
-            }
-        });
-
         //Delete Button - Complete!
         ((ImageButton) findViewById(R.id.deleteButton)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(LinearLayout ll:rows){
-                    for(int i=1; i<=maxPosition; i++){
-                        NoteButton x = (NoteButton) ll.getChildAt(i);
-                        if(x.isChecked()) {
-                            //Uncheck all the checked buttons
-                            if(x.getNoteState() == NoteState.HIGH) x.longclick();
-                            else x.click();
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MakeActivity.this);
+                alertDialogBuilder.setMessage("Empty all the notes?");
+                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        for(LinearLayout ll:rows){
+                            for(int i=1; i<=maxPosition; i++){
+                                NoteButton x = (NoteButton) ll.getChildAt(i);
+                                if(x.isChecked()) {
+                                    x.uncheck();
+
+                                }
+                            }
                         }
+                        Toast.makeText(getApplicationContext(), "Notes cleared", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
                     }
-                }
-                Toast.makeText(getApplicationContext(), "Loop cleared", Toast.LENGTH_SHORT).show();
-            }
-        });
+                });
 
-        //Add Button
-        ((ImageButton) findViewById(R.id.addButton)).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*
-                maxPosition += 4;
-                for(int i = maxPosition-4; i<=maxPosition; i++) {
-                    for (LinearLayout ll : rows) {
-
-                        TextView note = (TextView) ll.getChildAt(0);
-                        ll.addView(makeNoteButton((String)note.getText(), i));
-
-                    }
-                }
-                Toast.makeText(getApplicationContext(), "Loop length increased by 4", Toast.LENGTH_SHORT).show();
-                */
-                Toast.makeText(getApplicationContext(), "This feature is currently disabled", Toast.LENGTH_SHORT).show();
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 
@@ -131,30 +111,67 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
                 EditText title = (EditText) findViewById(R.id.loop_name);
 //                File output = new File(title.getText()+".mid");
 
-                int[][] notes = new int[9][13];
-                for(int i=1; i<=8; i++){
+                int[][] notes = new int[NUM_COLUMNS][NUM_ROWS];
+                for(int i=0; i<8; i++){
                     for(int j=0; j<13; j++){
-                        NoteButton x = (NoteButton) rows.get(j).getChildAt(i);
+                        NoteButton x = (NoteButton) rows.get(j).getChildAt(i+1);
                         if(x.isChecked()){
                             if(x.getNoteState() == NoteState.HIGH)
                                 notes[i][j] = x.getNoteInt()+12;
-                            else
+                            else if(x.getNoteState() == NoteState.MED)
                                 notes[i][j] = x.getNoteInt();
+                            else
+                                notes[i][j] = x.getNoteInt()-12;
                         }
                     }
                 }
 
-                MainActivity.mybeats[passedItemIndex].notes = notes;
+                mybeats[passedItemIndex].notes = notes;
 
                 if(title.getText().toString().isEmpty()){
-                    MainActivity.mybeats[passedItemIndex].setName("Custom Loop");
-                    MainActivity.mybeats[passedItemIndex].getButton().setText("Custom Loop");
+                    mybeats[passedItemIndex].setName("Custom Loop");
+                    mybeats[passedItemIndex].getButton().setText("Custom Loop");
                 }
                 else {
-                    MainActivity.mybeats[passedItemIndex].setName(title.getText().toString());
-                    MainActivity.mybeats[passedItemIndex].getButton().setText(title.getText().toString());
+                    mybeats[passedItemIndex].setName(title.getText().toString());
+                    mybeats[passedItemIndex].getButton().setText(title.getText().toString());
                 }
+
+                mybeats[passedItemIndex].setBpm(bpm);
                 onBackPressed();
+
+            }
+        });
+
+        final TextView showbpm = (TextView) findViewById(R.id.showbpm);
+        bpm = 120;
+        showbpm.setText(Integer.toString(bpm));
+
+        //bpm down
+        ((ImageButton) findViewById(R.id.leftButton)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(bpm>60){
+                    bpm-=5;
+                    showbpm.setText(Integer.toString(bpm));
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "bpm is too low!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        //bpm up
+        ((ImageButton) findViewById(R.id.rightButton)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(bpm<480){
+                    bpm+=5;
+                    showbpm.setText(Integer.toString(bpm));
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "bpm is too high!", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -169,14 +186,18 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
                     NoteButton x = (NoteButton) rows.get(j).getChildAt(i);
                     if(x.isChecked()){
                         if(x.getNoteState() == NoteState.HIGH)
-                        sendMidi(0x90,x.getNoteInt()+12,63);
-                        else
+                            sendMidi(0x90,x.getNoteInt()+12,63);
+                        else if(x.getNoteState() == NoteState.MED)
                             sendMidi(0x90,x.getNoteInt(),63);
+                        else
+                            sendMidi(0x90,x.getNoteInt()-12,63);
                     }
                 }
                 //Pause Here
                 try {
-                    Thread.sleep(500);
+                    double qqq = (double)bpm/60.0;
+                    qqq = 1000/qqq;
+                    Thread.sleep((int)qqq);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -269,15 +290,9 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
             @Override
             public void onClick(View view) {
                 ((NoteButton) view).click();
-                if(x.getNoteState() == NoteState.LOW) sendMidi(0x90,x.getNoteInt(),63);
-            }
-        });
-        x.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                ((NoteButton) view).longclick();
-                if(x.getNoteState() == NoteState.HIGH) sendMidi(0x90,x.getNoteInt()+12,63);
-                return true;
+                if(x.getNoteState() == NoteState.LOW) sendMidi(0x90,x.getNoteInt()-12,63);
+                else if(x.getNoteState() == NoteState.MED) sendMidi(0x90,x.getNoteInt(),63);
+                else if(x.getNoteState() == NoteState.HIGH) sendMidi(0x90,x.getNoteInt()+12,63);
             }
         });
 
@@ -315,31 +330,5 @@ public class MakeActivity extends Activity implements MidiDriver.OnMidiStartList
         msg[2] = (byte) v;
         midi.write(msg);
     }
-
-    /**
-     * fix the constructor
-     * use screen class to hold the "screens"
-    private class Screen {
-        ArrayList<LinearLayout> rows = new ArrayList<>();
-
-        //change current position based on index
-        Screen() {
-            int counter = 0;
-            for (LinearLayout ll : rows) {
-                //if i = 0, make sure to put a text view instead of a button
-                TextView tv = new TextView(MakeActivity.this);
-                tv.setLayoutParams(buttonParams);
-                tv.setText(num2Note(counter));
-                counter++;
-                ll.addView(tv);
-                for (int i = 1; i < 9; i++) {
-                    //create a notebutton class (derive from button)
-                    ll.addView(makeNoteButton(tv.getText().toString(),i+currentPosition-8));
-                }
-            }
-
-        }
-    }
-     **/
 
 }

@@ -46,7 +46,7 @@ public class NoteButton extends AppCompatButton{
     }
 
     public boolean isChecked(){
-        if(noteState == NoteState.HIGH || noteState == NoteState.LOW)
+        if(noteState == NoteState.HIGH || noteState == NoteState.LOW || noteState == NoteState.MED)
         return true;
 
         return false;
@@ -61,39 +61,25 @@ public class NoteButton extends AppCompatButton{
     }
 
     public NoteState click(){
-        if(noteState == NoteState.HIGH) noteState = NoteState.HIGH;
+        if(noteState == NoteState.OFF) noteState = NoteState.MED;
+        else if(noteState == NoteState.MED) noteState = NoteState.HIGH;
+        else if(noteState == NoteState.HIGH) noteState = NoteState.LOW;
         else if(noteState == NoteState.LOW) noteState = NoteState.OFF;
-        else noteState = NoteState.LOW;
 
-
-        if(noteState == NoteState.LOW) {
-            this.setBackgroundColor(Color.GREEN);
-        }
-        else if(noteState == NoteState.HIGH){
-            this.setBackgroundColor(Color.BLUE);
-        }
-        else {
-            if(color){
-                this.setBackgroundColor(Color.DKGRAY);
-                this.setTextColor(Color.WHITE);
-            } else{
-                this.setBackgroundColor(Color.WHITE);
-                this.setTextColor(Color.BLACK);
-            }
-        }
-
+        setBackColor();
         return noteState;
     }
 
-    public NoteState longclick(){
-        if(noteState == NoteState.HIGH) noteState = NoteState.OFF;
-        else if(noteState == NoteState.LOW) noteState = NoteState.HIGH;
-        else noteState = NoteState.HIGH;
+    public void uncheck(){
+        noteState = NoteState.OFF;
+        setBackColor();
+    }
 
-        if(noteState == NoteState.HIGH){
-            this.setBackgroundColor(Color.BLUE);
-        }
-        else {
+    public void setBackColor(){
+        if(noteState == NoteState.HIGH) this.setBackgroundColor(Color.BLUE);
+        else if(noteState == NoteState.MED) this.setBackgroundColor(Color.GREEN);
+        else if(noteState == NoteState.LOW) this.setBackgroundColor(Color.RED);
+        else{
             if(color){
                 this.setBackgroundColor(Color.DKGRAY);
                 this.setTextColor(Color.WHITE);
@@ -102,8 +88,6 @@ public class NoteButton extends AppCompatButton{
                 this.setTextColor(Color.BLACK);
             }
         }
-
-        return noteState;
     }
 
 }

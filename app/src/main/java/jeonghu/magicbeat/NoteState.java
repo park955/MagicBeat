@@ -7,5 +7,6 @@ package jeonghu.magicbeat;
 public enum NoteState {
     OFF,
     LOW,
+    MED,
     HIGH;
 }
